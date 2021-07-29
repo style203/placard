@@ -10,45 +10,45 @@
 </template>
 
 <script>
-	import shareImages from '../../components/hj-placard/hj-shareImages.vue'
-	export default {
-		components:{
-			shareImages
+import shareImages from '../../components/hj-placard/shareImages.vue'
+export default {
+	components:{
+		shareImages
+	},
+	data() {
+		return {
+			canvasImages:'',
+		}
+	},
+	methods: {
+		// 生成分享图片
+		createsShareImage(){
+			// console.log(this.$refs.canvas)
+			this.$refs.canvas.canvasCreate();
 		},
-		data() {
+		// 预览图片
+		previewHandle(){
+			uni.previewImage({
+				urls: [this.canvasImages],
+			});
+		},
+		// 回调图片地址
+		shareSuccess(e){
+			// console.log('地址',e)
+			this.canvasImages = e
+		},
+		// 分享
+		onShareAppMessage(res) {
+			// if (res.from === 'button') {
+			// 	console.log(res.target)
+			// }
 			return {
-				canvasImages:'',
-			}
-		},
-		methods: {
-			// 生成分享图片
-			createsShareImage(){
-				// console.log(this.$refs.canvas)
-				this.$refs.canvas.canvasCreate();
-			},
-			// 预览图片
-			previewHandle(){
-				uni.previewImage({
-					urls: [this.canvasImages],
-				});
-			},
-			// 回调图片地址
-			shareSuccess(e){
-				// console.log('地址',e)
-				this.canvasImages = e
-			},
-			// 分享
-			onShareAppMessage(res) {
-				// if (res.from === 'button') {
-				// 	console.log(res.target)
-				// }
-				return {
-					title: 'canvas图片分享',
-					path: this.canvasImages
-				}
+				title: 'canvas图片分享',
+				path: this.canvasImages
 			}
 		}
 	}
+}
 </script>
 
 <style scoped>
