@@ -29,7 +29,7 @@
 				bgImg:'../../static/bg.jpg',	// 背景图片
 				qr_code:'',		// 二维码
 				qr_size: 100,	// 二维码大小
-				qr_url: 'https://www.baidu.com/',	// 生成二维码的链接
+				qr_url: 'https://ext.dcloud.net.cn/plugin?id=5747',	// 生成二维码的链接
 			}
 		},
 		mounted(){

@@ -4,6 +4,8 @@
 canvas绘制海报、二维码并分享，可以预览保存并分享海报。
 海报下方二维码旁边标题比较长，做了自动换行处理。
 
+**github 地址** [https://github.com/style203/placard](https://github.com/style203/placard)
+
 ## 安装方式
 
 插件在 HBuilderX 3.1.22 开发，只需将本组件导入项目或者下载示例项目。
