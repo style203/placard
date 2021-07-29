@@ -10,7 +10,7 @@
 </template>
 
 <script>
-	import shareImages from '../../components/canvas/hj-shareImages.vue'
+	import shareImages from '../../components/hj-placard/hj-shareImages.vue'
 	export default {
 		components:{
 			shareImages
