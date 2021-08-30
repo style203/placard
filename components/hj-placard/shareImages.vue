@@ -79,6 +79,7 @@
 				// 延迟后渲染至canvas上
 				let pic = await _this.setTime(ctx)
 				_this.$emit('success', pic);
+				_this.qr_code = '';
 			},
 			/**
 			 * @param {Object} ctx_2d	getContext("2d") 对象
