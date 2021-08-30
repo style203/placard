@@ -1,7 +1,7 @@
 <template>
 	<view style="position: fixed;z-index: -9999;">
 		<canvas :canvas-id="canvasID" :style="{width:canvasWidth+'px',height:canvasHeight+'px'}"></canvas>
-		<view v-if="qr_code == ''">
+		<view v-if="qrCode == ''">
 			<QRCode ref="qrcode" />
 		</view>
 	</view>
@@ -18,18 +18,41 @@
 				Type: String,
 				default: 'shareCanvas'
 			},
+			canvasWidth:{	// 画布宽度
+				Type: 'int',
+				default: 375
+			},
+			canvasHeight:{	// 画布高度
+				Type: 'int',
+				default: 500
+			},
+			shareTitle:{	// 分享标题
+				Type: 'String',
+				default: '我是这张图片的标题'
+			},
+			goodsTitle:{	// 商品宣传标题
+				Type: 'String',
+				default: '我是这张图片的标题我是这张图片的标题我是这张图片的标'
+			},
+			shareImage:{	// 分享图片
+				Type: 'String',
+				default: '../../static/bg.jpg'
+			},
+			qrSize:{	// 二维码大小
+				Type: 'int',
+				default: 100
+			},
+			qrUrl:{		// 生成二维码的链接
+				Type: 'String',
+				default: 'https://ext.dcloud.net.cn/plugin?id=5747'
+			}
 		},
 		components:{
 			QRCode
 		},
 		data() {
 			return {
-				canvasWidth:375,	// 宽度
-				canvasHeight:500,	// 高度
-				bgImg:'../../static/bg.jpg',	// 背景图片
-				qr_code:'',		// 二维码
-				qr_size: 100,	// 二维码大小
-				qr_url: 'https://ext.dcloud.net.cn/plugin?id=5747',	// 生成二维码的链接
+				qrCode:'',	// 二维码
 			}
 		},
 		mounted(){
@@ -38,11 +61,11 @@
 		methods: {
 			// 创建二维码
 			canvasCreate(){
-				_this.$refs.qrcode.make({size: _this.qr_size,text: _this.qr_url})
+				_this.$refs.qrcode.make({size: _this.qrSize,text: _this.qrUrl})
 					.then(res => {
 						// 返回的res与uni.canvasToTempFilePath返回一致
 						// console.log(res)
-						_this.qr_code = res.tempFilePath;
+						_this.qrCode = res.tempFilePath;
 						_this.onCanvas();
 					});
 			},
@@ -57,14 +80,14 @@
 				ctx.fillRect(0, 0, _this.canvasWidth, _this.canvasHeight);
 				ctx.setFillStyle('#000000');
 				// 背景图片
-				ctx.drawImage(_this.bgImg,50,50);
+				ctx.drawImage(_this.shareImage,50,50);
 				ctx.setFontSize(18);
 				ctx.setTextAlign('center');
-				ctx.fillText('我是这张图片的标题', _this.canvasWidth/2, 30);
+				ctx.fillText(_this.shareTitle, _this.canvasWidth/2, 30);
 				// 左边标题
 				ctx.setTextAlign('left')
 				ctx.setFontSize(16)
-				_this.writeTextOnCanvas(ctx,30,21,'我是这张图片的标题我是这张图片的标题我是这张图片的标',50,350);
+				_this.writeTextOnCanvas(ctx,30,21,_this.goodsTitle,50,350);
 				// 设置虚线
 				ctx.setStrokeStyle('#333333');
 				ctx.setLineDash([5, 10], 2);
@@ -73,7 +96,7 @@
 				ctx.lineTo(220, 420);
 				ctx.stroke();
 				// 二维码
-				ctx.drawImage(_this.qr_code,225,330,100,100);
+				ctx.drawImage(_this.qrCode,225,330,100,100);
 				// ctx.draw();
 				
 				// 延迟后渲染至canvas上
